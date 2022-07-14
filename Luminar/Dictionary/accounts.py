@@ -51,20 +51,50 @@ acc = {}
 
 
 # q2- print savings type account details
-savings=[ac["acno"] for ac in accounts if ac["ac_type"]=="savings"]
-        #return acno only
-print(savings)
+# savings=[ac["acno"] for ac in accounts if ac["ac_type"]=="savings"]
+#         #return acno only
+# print(savings)
+
+
 # q3 - sort accounts based balance order by descending
+# accounts.sort(reverse=True,key=lambda i:i["balance"])
+# print(accounts)         #list aanu...so accounts.sort
+# # or
+# print(sorted(accounts,reverse=True,key=lambda i:i["balance"]))
 
 
-# q4 - print all transactions where transaction amount > 500
+# q4 - print all transactions using phone pay
+# alltrans=[ac["transactions"] for ac in accounts ]
+# phonepay=[trans for tlist in alltrans for trans in tlist if trans["method"]=="phone-pay"]
+# print(phonepay)
 
 
-# q5 - print all transactions using phone pay
+# q5 - print all transactions where transaction amount > 500
+# greater =[trans for tlist in alltrans for trans in tlist if trans["amount"]>500]
+# print(greater)
+
+
+# phonepay=[ac for ac in accounts if ac["method"]=="phone-pay"]
+# print(phonepay)
 
 
 # q6 - print transactions coming to acc-1002
-
+# credited_t=[trans for tlist in alltrans for trans in tlist if trans["to"]==1002]
+# print(credited_t)
 
 # q7 - print each payment method sum (aggregate transactions based on payment)
+paymethodsum={}
+alltrans=[ac["transactions"] for ac in accounts ]
+transactions=[t for tlsist in alltrans for t in tlsist]
+print(transactions)
 
+for trans in transactions:
+
+    pay_method=trans["method"]
+    amount=trans["amount"]
+    if pay_method in paymethodsum:
+        paymethodsum[pay_method]+=amount
+    else:
+        paymethodsum[pay_method]=amount
+#
+print(paymethodsum)
