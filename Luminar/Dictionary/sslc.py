@@ -12,25 +12,20 @@ results = [
 
 ]
 
-# sort result based on win order by desc
+# #sort results based on win percentage-- desc order
+#
+# print(sorted(results,key=lambda res:res["win"],reverse=True))
+#
+# #print dist with min win %
+# print(min(results,key=lambda i:i["win"]))
+#
+# #sort results based on A+
+# print(sorted(results,key=lambda i:i["A+"], reverse=True))
+#
+# #print dist with low A+
+# print(sorted(results,key=lambda i:i["A+"]))
 
-print(sorted(results,key=lambda res:res["win"],reverse=True))
-
-# print dist with min win %
-
-print(min(results,key=lambda res:res["win"]))
-
-# sort results based on A+ desc
-
-print(sorted(results,key=lambda res:res["A+"],reverse=True))
-
-# print dist with low count A+
-
-print(min(results,key=lambda res:res["A+"]))
-
-# print total number of students who got full A+
-
-aplus=[res["A+"]for res in results ]                              # list comprehension
+#total students who got A+
+aplus=[i["A+"] for i in results]
+print(aplus)
 print(sum(aplus))
-
-
