@@ -40,11 +40,20 @@ accounts = [
 acc = {}
 
 # q1 - print details of 1002
+# for ac in accounts:
+#     if ac["acno"]==1002:
+#         transactions=ac.pop("transactions")  #remove transaction key
+#         print(ac)
+
+
+# ac_details=[ac for ac in accounts if ac["acno"]==1002]
+# print(ac_details)
 
 
 # q2- print savings type account details
-
-
+savings=[ac["acno"] for ac in accounts if ac["ac_type"]=="savings"]
+        #return acno only
+print(savings)
 # q3 - sort accounts based balance order by descending
 
 
