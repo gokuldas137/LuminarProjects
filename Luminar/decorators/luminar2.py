@@ -19,8 +19,8 @@ class Employee():
         return self.name
 
 
-# employee=Employee(1234,"rahul","hr")
-# print(employee)
+employee=Employee(1234,"rahul","hr")
+# # print(employee)"
 
 
 class Department():
