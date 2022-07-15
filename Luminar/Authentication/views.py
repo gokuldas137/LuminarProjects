@@ -9,3 +9,4 @@ def authenticate(**kwargs):
 
 
 authenticate(username="django",password="django@123")
+ 
