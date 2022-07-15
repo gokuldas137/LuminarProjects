@@ -8,6 +8,15 @@ class Pycharm(Editor):
         funcs=super().functionalities()                                     # use of super()
         funcs.append(["debug","versioncontrolling"])
         return funcs
-pyc=Pycharm()
-print(pyc.functionalities())
 
+class Vscode(Editor):
+    def functionalities(self):
+        funcs=super().functionalities()
+        funcs.append(["more extension support"])
+        return funcs
+
+# pyc=Pycharm()
+# print(pyc.functionalities())
+
+vsc=Vscode()
+print(vsc.functionalities())
