@@ -83,6 +83,7 @@ acc = {}
 # print(credited_t)
 
 # q7 - print each payment method sum (aggregate transactions based on payment)
+
 paymethodsum={}
 alltrans=[ac["transactions"] for ac in accounts ]
 transactions=[t for tlsist in alltrans for t in tlsist]
@@ -98,3 +99,5 @@ for trans in transactions:
         paymethodsum[pay_method]=amount
 #
 print(paymethodsum)
+
+print(max(paymethodsum.items(),key=lambda it:it[1]))
