@@ -1,73 +1,98 @@
 from Luminar.Blog.models import users, posts
 
+# post - post
+# get - retrieve                      # videos 29 and 30
+# put/patch - update
+# delete - delete
+
+
+# authenticate
+
 session = {}
 
+
+# us_er=[user for user in users if user["username"]==username and user["password"]==password ]
+# print(us_er)
 
 def signin_required(fn):
     def wrapper(*args, **kwargs):
         if "user" in session:
-            return fn(*args,**kwargs)
+            return fn(*args, **kwargs)
         else:
-            print("Invalid User")
+            print("invalid session you must login")
+
     return wrapper
 
 
-# username="akhil"
-# password="password@123"
-
-# for users in user:
-#     if user["username"]==username and user["password"]==password:
-#         print("ACCESS GRANTED")
-#         break
-#     else:
-#         print("DENIED")
-
-# user=[user for user in users if user["username"]==username and user["password"]==password]
-# if user:
-#     print("ACCESS GRANTED")
-# else:
-#     print("ACCESS DENIED")
-def authenticate(**kwargs):
+def authenticate(*args, **kwargs):
     username = kwargs.get("username")
     password = kwargs.get("password")
-    user = [user for user in users if user["username"] == username and user["password"] == password]
-    return user
+    us_er = [user for user in users if user["username"] == username and user["password"] == password]
+    return us_er
 
 
-# print(authenticate(username="akhil",password="Password@123"))
+# print(authenticate(username="akhil", password="Password@123"))
 
+# print(authenticate(username="vinu",password="Password@123"))
 
-# LOGIN
-# get ppost put/patch delete
 class LoginView:
-    def post(self,*args, **kwargs):
+    def post(self, **kwargs):
         username = kwargs.get("username")
         password = kwargs.get("password")
-        user = authenticate(username=username, password=password)  # username and pass correct aanonn check cheyan
-        # print(user)
+        user = authenticate(username=username, password=password)
         if user:
             session["user"] = user[0]
-            # key      0th value
         # print(session)
 
 
 class PostListView:
     @signin_required
-    def get(self,*args,**kwargs):
+    def get(self, **kwargs):
         return posts
+
+    @signin_required
+    def post(self, *args, **kwargs):
+        userId = session["user"]["id"]
+        # print(kwargs)
+        post = kwargs.get("data")
+        post["userId"] = userId
+        print(post)
+        posts.append(post)
+        print("posted successfully")
+        print(posts[0])
+
 
 class MyPostListView:
     @signin_required
-    def get(self,*args,**kwargs):
-        userid=session["user"]["id"]
-        myposts=[post for post in posts if post["userId"]==userid]
-        return myposts
-
-login = LoginView()
-login.post(username="akhil", password="Password@123")
-allposts = PostListView()
-print(allposts.get())
+    def get(self, *args, **kwargs):
+        userId = session["user"]["id"]
+        my_post = [post for post in posts if post["userId"] == userId]
+        return my_post
 
 
-myposts=MyPostListView()
-print(myposts.get())
+class AddLike:
+    @signin_required
+    def post(self, *args, **kwargs):
+        postid = kwargs.get("postid")
+        post = [post for post in posts if post["postId"] == postid]
+        if post:
+            post = post[0]
+            userid = session["user"]["id"]
+            post["liked_by"].append(userid)
+            print(post["liked_by"])
+
+
+log_in = LoginView()
+log_in.post(username="richard", password="Password@123")
+all_post = PostListView()
+# print(all_post.get())
+# print(session)
+# mypostlistview=MyPostListView()
+# print(mypostlistview.get())
+my_post = {
+    "postId": 9, "title": "hello goodmorning", "content": "mycontent", "liked_by": []
+}
+all_post.post(data=my_post)
+
+like = AddLike()
+like.post(postid=1)
